@@ -1,23 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
 
-class DatosUsuario extends React.Component {
+const  DatosUsuario = () => {
 
-  constructor(props) {
-      super(props);
-      this.state = {
-        email: {
-          value: '',
-          valid: true
-        },
-        password: {
-          value: '',
-          valid: true
-        }
-      }
-    }
+  const [email, setEmail] = useState({
+    value: '',
+    valid: true
+  });
 
-  render() {
+  const [password, setPassword] = useState({
+    value: '',
+    valid: true
+  });
+
     return (
       <Box
         component="form"
@@ -40,8 +35,8 @@ class DatosUsuario extends React.Component {
           type="email"
           error={false}
           helperText={false && "Ingresa un correo electrónico válido"}
-          value={this.state.email.value}
-          onChange={ (input) => this.setState({email:{ value: input.target.value}})}
+          value={email.value}
+          onChange={ (input) => {setEmail({ value: input.target.value, valid: true}) }}
         />
         <TextField
           label="Contraseña"
@@ -49,15 +44,14 @@ class DatosUsuario extends React.Component {
           fullWidth
           margin="dense"
           type="password"
-          value={ this.state.password.value }
-          onChange={ (input) => this.setState({password:{ value: input.target.value}})}
+          value={ password.value }
+          onChange={ (input) => setPassword({ value: input.target.value, valid: true }) }
         />
         <Button variant="contained" type="submit">
           Siguiente
         </Button>
       </Box>
     );
-  }
 }
 
 export default DatosUsuario;
