@@ -6,12 +6,12 @@ const  DatosUsuario = () => {
 
   const [email, setEmail] = useState({
     value: '',
-    valid: true
+    valid: null,
   });
 
   const [password, setPassword] = useState({
     value: '',
-    valid: true
+    valid: null,
   });
 
     return (
@@ -26,6 +26,11 @@ const  DatosUsuario = () => {
         }}
         onSubmit={ (e) => {
           e.preventDefault();
+          if (email.valid && password.valid) {
+            console.log('siguiente formulario');
+          } else {
+            console.log('error para continuar el formulario');
+          }
         }}
       >
         <TextField
@@ -34,8 +39,8 @@ const  DatosUsuario = () => {
           fullWidth
           margin="dense"
           type="email"
-          error={false}
-          helperText={false && "Ingresa un correo electrónico válido"}
+          error={email.valid === false}
+          helperText={email.valid === false && "Ingresa un correo electrónico válido" }
           value={email.value}
           onChange={ (input) => {
             const email = input.target.value;
@@ -48,6 +53,8 @@ const  DatosUsuario = () => {
           fullWidth
           margin="dense"
           type="password"
+          error={password.valid === false}
+          helperText={password.valid === false && "Ingresa una contraseña válida" }
           value={ password.value }
           onChange={ (input) => {
             const password = input.target.value;
