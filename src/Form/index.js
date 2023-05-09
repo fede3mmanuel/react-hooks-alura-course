@@ -9,7 +9,7 @@ import Stepper from "../Stepper";
 
 const Form = () => {
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const updateStep = (step) => {
     setStep(step);
