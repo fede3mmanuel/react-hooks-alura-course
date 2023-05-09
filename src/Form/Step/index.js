@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
 
-const Step = ({ data, step }) => {
-
-    const { inputs, buttonText, onSubmit } = data;
+const Step = ({ data, step, pasos }) => {
+  const { inputs, buttonText, onSubmit } = data;
 
   return (
     <Box
@@ -15,33 +14,30 @@ const Step = ({ data, step }) => {
         justifyContent: "center",
         flexDirection: "column",
       }}
-      onSubmit={onSubmit}
+      onSubmit={(e) => onSubmit(e, step, pasos)}
     >
-        {
-            inputs.map( (input, i) => {
+      {inputs.map((input, i) => {
+        const { label, type, value, valid, onChange, helperText, validator } =
+          input;
 
-                const {label, type, value, valid, onChange, helperText, validator} = input
-                return (
-                    <TextField
-                        key={i}
-                        label= {label}
-                        variant="outlined"
-                        fullWidth
-                        margin="dense"
-                        type= {type}
-                        error={ valid === false}
-                        helperText={
-                            valid === false && { helperText }
-                        }
-                        value={ value }
-                        onChange={ (e) => onChange(e, i, step, validator) }
-                    />
-                )
-            })
-        }
-      
+        return (
+          <TextField
+            key={i}
+            label={label}
+            variant="standard"
+            fullWidth
+            margin="dense"
+            type={type}
+            error={valid === false}
+            helperText={valid === false && helperText}
+            value={value}
+            onChange={(e) => onChange(e, i, step, validator, pasos)}
+          />
+        );
+      })}
+
       <Button variant="contained" type="submit">
-        { buttonText }
+        {buttonText}
       </Button>
     </Box>
   );
