@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { LogoSpace, FormSpace, Img } from "./styles";
 import DatosUsuario from "./DatosUsuario";
@@ -12,7 +12,13 @@ import { validarEmail, validarPassword } from "./DatosUsuario/validaciones";
 
 const Form = () => {
   const [step, setStep] = useState(2);
+  const [pasos, setPasos] = useState({});
 
+  useEffect(() => {
+      console.log("pasos", pasos);
+    }, [pasos]);
+
+  useEffect( () => {}, [step])
   //step = 0 --> <DatosUsuario />
   //step = 1 --> <DatosPersonales />
   //step = 2 --> <DatosEntrega />
@@ -30,7 +36,11 @@ const Form = () => {
     3: <Complete />,
   };
 
-  const onSubmit = () => {}
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let newStep = step + 1;
+    setStep(newStep);
+  }
 
   const handleChange = (element, position, currentStep, validator) => {
     const value = element.target.value;
@@ -39,6 +49,30 @@ const Form = () => {
 
   const stepsFlow = {
     0: {
+      inputs: [
+        {
+          label: "Correo electrónico",
+          type: "email",
+          value: "",
+          valid: null,
+          onchange : handleChange,
+          helperText: "Ingrese correo valido",
+          validator: validarEmail
+        },
+        {
+          label: "Contraseña",
+          type: "password",
+          value: "",
+          valid: null,
+          onchange : handleChange,
+          helperText: "Ingresa una contraseña válida, Al menos 8 caracteres y máximo 20.",
+          validator: validarPassword,
+        }
+      ],
+      buttonText: 'Siguente',
+      onSubmit
+    },
+    1: {
       inputs: [
         {
           label: "Correo electrónico",
