@@ -34,7 +34,7 @@ const Step = ({ data, step }) => {
                             valid === false && { helperText }
                         }
                         value={ value }
-                        onChange={ onChange }
+                        onChange={ (e) => onChange(e, i, step, validator) }
                     />
                 )
             })
