@@ -6,6 +6,9 @@ import DatosPersonales from "./DatosPersonales";
 import DatosEntrega from "./DatosEntrega";
 import Complete from "./Complete";
 import Stepper from "../Stepper";
+import Step from "./Step";
+// validaciones
+import { validarEmail, validarPassword } from "./DatosUsuario/validaciones";
 
 const Form = () => {
   const [step, setStep] = useState(2);
@@ -27,6 +30,37 @@ const Form = () => {
     3: <Complete />,
   };
 
+  const onSubmit = () => {}
+
+  const stepsFlow = {
+    0: {
+      inputs: [
+        {
+          label: "Correo electrónico",
+          type: "email",
+          value: "",
+          valid: null,
+          onchange : () => {
+          },
+          helperText: "Ingrese correo valido",
+          validator: validarEmail
+        },
+        {
+          label: "Contraseña",
+          type: "password",
+          value: "",
+          valid: null,
+          onchange : () => {
+          },
+          helperText: "Ingresa una contraseña válida, Al menos 8 caracteres y máximo 20.",
+          validator: validarPassword,
+        }
+      ],
+      buttonText: 'Siguente',
+      onSubmit
+    },
+  }
+
   return (
     <Box
       sx={{
@@ -41,10 +75,8 @@ const Form = () => {
       </LogoSpace>
       <FormSpace>
         {step < 3 && <Stepper step={step} />}
-        {/* <DatosUsuario />
-        <DatosPersonales />
-        <DatosEntrega /> */}
-        {steps[step]}
+        {/* {steps[step]} */}
+        <Step data={ stepsFlow[step] } step={step} />
       </FormSpace>
     </Box>
   );
